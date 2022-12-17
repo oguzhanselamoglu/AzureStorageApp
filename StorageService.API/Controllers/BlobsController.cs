@@ -21,19 +21,25 @@ namespace StorageService.API.Controllers
         {
             var names = _blobStorage.GetNames(EContainerName.pictures);
             string blobUrl = $"{_blobStorage.BlobUrl}/{EContainerName.pictures.ToString()}";
-            return Ok(names);
+            var response = names.Select(n => new
+            {
+                Name = n,
+                Url = $"{blobUrl}/{n}"
+            }).ToList();
+
+            return Ok(response);
         }
 
         [HttpPost]
         public async Task<IActionResult> Upload(IFormFile picture)
         {
-            await _blobStorage.SetLog("Upload methoduna giriş yapıldı", "controller.txt");
+            await _blobStorage.SetLogAsync("Upload methoduna giriş yapıldı", "controller.txt");
 
             var newFileName = Guid.NewGuid().ToString() + Path.GetExtension(picture.FileName);
 
             await _blobStorage.UploadAsync(picture.OpenReadStream(), newFileName, EContainerName.pictures);
 
-            await _blobStorage.SetLog("Upload methodundan çıkış yapıldı", "controller.txt");
+            await _blobStorage.SetLogAsync("Upload methodundan çıkış yapıldı", "controller.txt");
             return Ok();
         }
     }

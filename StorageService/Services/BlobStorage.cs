@@ -21,9 +21,9 @@ namespace StorageService.Services
 
        
 
-        public string BlobUrl => "";
+        public string BlobUrl => ConnectionStrings.BlobUrl;
 
-        public async Task Delete(string fileName, EContainerName eContainerName)
+        public async Task DeleteAsync(string fileName, EContainerName eContainerName)
         {
             var containerClient = blobServiceClient.GetBlobContainerClient(eContainerName.ToString());
             var blobClient = containerClient.GetBlobClient(fileName);
@@ -41,7 +41,7 @@ namespace StorageService.Services
             return info.Value.Content;
         }
 
-        public async Task<List<string>> GetLogList(string fileName)
+        public async Task<List<string>> GetLogsAsync(string fileName)
         {
             List<string> logs = new List<string>();
 
@@ -68,6 +68,7 @@ namespace StorageService.Services
             var containerClient = blobServiceClient.GetBlobContainerClient(eContainerName.ToString());
             var list = new List<string>();
             var blobs = containerClient.GetBlobs();
+            
             foreach (var blob in blobs)
                 list.Add(blob.Name);
 
@@ -75,7 +76,7 @@ namespace StorageService.Services
             return list;
         }
 
-        public async Task SetLog(string text, string fileName)
+        public async Task SetLogAsync(string text, string fileName)
         {
 
             var containerClient = blobServiceClient.GetBlobContainerClient(EContainerName.logs.ToString());

@@ -13,9 +13,11 @@ namespace StorageService
         public string BlobUrl { get; }
         Task UploadAsync(Stream stream, string fileName, EContainerName eContainerName);
         Task<Stream> DownloadAsync(string fileName, EContainerName eContainerName); 
-        Task Delete(string fileName, EContainerName eContainerName);
-        Task SetLog(string text, string fileName);
-        Task<List<string>> GetLogList(string fileName);
+        Task DeleteAsync(string fileName, EContainerName eContainerName);
+
+        //Loglama amaclı
+        Task SetLogAsync(string text, string fileName);
+        Task<List<string>> GetLogsAsync(string fileName);
         List<string> GetNames(EContainerName eContainerName);
 
     }

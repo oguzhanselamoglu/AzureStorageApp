@@ -18,7 +18,7 @@ builder.Services.AddCors(options => options.AddPolicy("AllowCors",
                            }));
 
 ConnectionStrings.AzureStorageConnectionString = builder.Configuration.GetSection("AzureConnectionStrings")["CloudConStr"];
-
+ConnectionStrings.BlobUrl = builder.Configuration.GetSection("AzureConnectionStrings")["BlobUrl"];
 builder.Services.AddSingleton<IBlobStorage, BlobStorage>();
 
 builder.Services.AddSwaggerGen(c =>
@@ -29,7 +29,7 @@ builder.Services.AddSwaggerGen(c =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsEnvironment("Local"))
 {
     app.UseSwagger();
     app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "StorageService.API v1"));
