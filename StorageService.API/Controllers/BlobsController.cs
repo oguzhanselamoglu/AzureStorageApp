@@ -42,5 +42,19 @@ namespace StorageService.API.Controllers
             await _blobStorage.SetLogAsync("Upload methodundan çıkış yapıldı", "controller.txt");
             return Ok();
         }
+        [HttpGet]
+        public async Task<IActionResult> Download(string fileName)
+        {
+            var stream = await _blobStorage.DownloadAsync(fileName, EContainerName.pictures);
+            return File(stream, "application/octet-stream", fileName);
+        }
+
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete(string fileName)
+        {
+            await _blobStorage.DeleteAsync(fileName, EContainerName.pictures);
+            return Ok();
+        }
     }
 }
