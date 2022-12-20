@@ -18,6 +18,7 @@ namespace StorageService.Services
         {
             await _queueClient.SendMessageAsync(message);
         }
+
         public async Task<QueueMessage?> RetrieveMessageAsync()
         {
             QueueProperties properties = await _queueClient.GetPropertiesAsync();
@@ -31,6 +32,11 @@ namespace StorageService.Services
 
             }
             return null;
+        }
+
+        public async Task DeleteMessage(string messageId,string popReceipt)
+        {
+
         }
     }
 }

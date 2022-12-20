@@ -1,0 +1,57 @@
+<br>
+<div class="container">
+<div class="row">
+
+  <div class="col-8">
+    <label class="btn btn-default p-0">
+      <input type="file" (change)="selectFile($event)" />
+    </label>
+  </div>
+
+  <div class="col-4">
+    <button class="btn btn-success btn-sm" [disabled]="!selectedFiles" (click)="upload()">
+      Upload
+    </button>
+  </div>
+</div>
+</div>
+<div *ngIf="currentFile" class="progress my-3">
+  <div
+    class="progress-bar progress-bar-info progress-bar-striped"
+    role="progressbar"
+    attr.aria-valuenow="{{ progress }}"
+    aria-valuemin="0"
+    aria-valuemax="100"
+    [ngStyle]="{ width: progress + '%' }"
+  >
+    {{ progress }}%
+  </div>
+</div>
+
+<div *ngIf="message" class="alert alert-secondary" role="alert">{{ message }}</div>
+
+<div class="card mt-3">
+  <div class="card-header">List of Files</div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">File</th>
+        <th scope="col"></th>
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let file of fileInfos | async; index as i">
+        <th scope="row">{{i +1 }}</th>
+        <td><a href="{{ file.url }}">{{ file.name }}</a></td>
+        <td ><button type="button" class="btn btn-primary"  style="margin-right: 2px;" (click)="download(file.name)">Download</button>
+          <button type="button" class="btn btn-danger" (click)="delete(file.name)">Delete</button></td>
+
+      </tr>
+
+    </tbody>
+  </table>
+
+
+</div>
