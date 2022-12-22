@@ -1,0 +1,15 @@
+<div mat-dialog-content>
+
+  <mat-form-field appearance="legacy">
+    <mat-label>Name</mat-label>
+    <input type="file" (change)="selectFile($event)" />
+  </mat-form-field>
+  <mat-form-field appearance="legacy">
+    <mat-label>Address</mat-label>
+    <input matInput placeholder="Placeholder" [(ngModel)]="data.directory">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button (click)="upload()" cdkFocusInitial>Save</button>
+</div>

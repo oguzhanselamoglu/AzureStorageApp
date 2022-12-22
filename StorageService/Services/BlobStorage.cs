@@ -100,8 +100,9 @@ namespace StorageService.Services
 
         public async Task UploadAsync(Stream stream, string fileName, EContainerName eContainerName)
         {
-
-            var containerClient = blobServiceClient.GetBlobContainerClient(eContainerName.ToString());
+            string companyId = Guid.NewGuid().ToString();
+            string path = $"{companyId}";
+            var containerClient = blobServiceClient.GetBlobContainerClient(path.ToString());
 
 
             await containerClient.CreateIfNotExistsAsync();

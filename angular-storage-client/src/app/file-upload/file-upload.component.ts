@@ -1,7 +1,9 @@
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { FileUploadService } from '../services/file-upload.service';
+import { FileSelectComponent } from './file-select/file-select.component';
 
 @Component({
   selector: 'app-file-upload',
@@ -16,7 +18,7 @@ export class FileUploadComponent implements OnInit {
 
   fileInfos?: Observable<any>;
 
-  constructor(private uploadService: FileUploadService) { }
+  constructor(private uploadService: FileUploadService,public dialog: MatDialog) { }
 
   ngOnInit() {
     this.refresh();
@@ -27,6 +29,27 @@ export class FileUploadComponent implements OnInit {
   selectFile(event: any): void {
     this.selectedFiles = event.target.files;
   }
+  addData(): void {
+
+
+    const dialogRef = this.dialog.open(FileSelectComponent, {
+      width: '250px',
+
+    });
+
+    dialogRef.afterClosed().subscribe((result: { status: any; }) => {
+      console.log('The dialog was closed');
+      if (result.status) {
+        this.upload();
+        //TODO: modal üzerinden zaten veri geliyor fakat ngrx üzerinden almaya çalıştım
+        // this.dataSource.push(result.data);
+        // this.table.renderRows();
+
+      }
+
+    });
+  }
+
   upload(): void {
     this.progress = 0;
 

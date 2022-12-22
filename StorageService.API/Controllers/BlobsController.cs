@@ -20,7 +20,7 @@ namespace StorageService.API.Controllers
         public async Task<IActionResult> GetNames()
         {
             var names = _blobStorage.GetNames(EContainerName.pictures);
-            string blobUrl = $"{_blobStorage.BlobUrl}/{EContainerName.pictures.ToString()}";
+            string blobUrl = $"{_blobStorage.BlobUrl}{EContainerName.pictures.ToString()}";
             var response = names.Select(n => new
             {
                 Name = n,
